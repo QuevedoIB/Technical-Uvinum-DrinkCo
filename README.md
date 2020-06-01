@@ -89,7 +89,46 @@ https://demo9415114.mockable.io/drinksandco-checkout-technical-test
 ## Valoraremos positivamente:
 
 - El uso de buenas prácticas y que utilices el potencial de ES6.
+
+Intento siempre hacer un código limpio y principalmente uso ES6 y ES7 (async/await).
+
 - Que incluyas tests de tus componentes.
+
+Los componentes en la carpeta components tienen su respectivo archivo de tests unitarios. Para ejecutar los tests hay que simplemente hacer npm test.
+
 - Si utilizas librerias, recuerda utilizar algún gestor de paquetes.
+
+He utilizado npm aunque yarn es una alternativa.
+
 - Así mismo, si utilizas librerias, explicanos por qué las has escogido.
+
+  "@react-native-community/masked-view": "^0.1.10",
+  "@react-navigation/native": "^5.5.0",
+  "@react-navigation/stack": "^5.4.1",
+  "axios": "^0.19.2",
+  "formik": "^2.1.4",
+  "prop-types": "^15.7.2",
+  "react": "16.11.0",
+  "react-native": "0.62.2",
+  "react-native-extended-stylesheet": "^0.12.0",
+  "react-native-gesture-handler": "^1.6.1",
+  "react-native-reanimated": "^1.9.0",
+  "react-native-safe-area-context": "^3.0.2",
+  "react-native-screens": "^2.8.0",
+  "react-redux": "^7.2.0",
+  "redux": "^4.0.5",
+  "yup": "^0.29.1"
+
+Para la navegación he utilitzado react-navigation, tiene una comunidad muy buena (el creador hace cursos y he hecho alguno suyo), y en la última actualización a react navigation 5+ han mejorado mucho el boilerplate para que se asemeje el máximo posible a react-router (navegación web).
+
+Para hacer http requests he utilitzado axios, una alternativa sería fetch, pero estoy acostumbrado a axios porque también se puede utilizar para hacer llamadas en el backend.
+
+Formik + Yup, por un lado formik no es otra cosa que un gestor de lógica de formularios, pero está muy ordenado, la documentación es clara y simplifica el trabajo a la hora de hacer formularios. Para validar los formularios he cogido Yup por lo fácil que es de combinar con Formik.
+
+Prop-types, para tipar mínimamente los componentes.
+
+React-native-extended-stylesheet, es una ampliación de la StyleSheet clásica de React Native, con la versión extended puedes realizar operaciones dentro del propio css (operaciones básicas que podrían asemejarse a saas) así como definir variables de estilo globales que va muy bien a la hora de establecer los colores base de la app, fuentes...
+
+Redux: Para gestionar el estado de la aplicación, no era estrictamente necesario para solo lo que se pide en el wireframe, pero es en vista a escalar el código. Tiene boilerplate pero una vez tienes la store montada escala sin problemas.
+
 - Recuerda, se trata de una prueba técnica de front-end, no de UX/UI Designer. Evaluaremos cómo utilizas CSS, no el look and feel final.
