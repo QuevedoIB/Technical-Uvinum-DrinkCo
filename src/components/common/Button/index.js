@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 
 import styles from './styles';
 
-const Button = ({text, onPress, style}) => {
+const Button = ({text, onPress, style, ...rest}) => {
   return (
     <TouchableOpacity
       testID={'buttonTouchable'}
       onPress={onPress}
-      style={[styles.container, style]}>
+      style={[styles.container, style]}
+      {...rest}>
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );

@@ -7,6 +7,7 @@ import styles from '../SummaryScreen/styles';
 
 import checkoutService from '../../services/checkoutService';
 import Button from '../../components/common/Button';
+import ShadowContainer from '../../components/common/ShadowContainer';
 
 const SummaryScreen = ({cart: {items}, navigation}) => {
   const [state, setState] = useReducer(
@@ -23,10 +24,16 @@ const SummaryScreen = ({cart: {items}, navigation}) => {
     const transport = amountWithoutIVA >= 30 ? 0 : 5.95;
 
     setState({
-      amountWithoutIVA: amountWithoutIVA.toFixed(2),
-      transport,
-      taxes: (amountWithoutIVA * 0.2).toFixed(2),
-      total: (amountWithoutIVA * 1.2 + transport).toFixed(2),
+      amountWithoutIVA: {
+        qty: amountWithoutIVA.toFixed(2),
+        label: 'Total without IVA: ',
+      },
+      transport: {qty: transport, label: 'Total envío: '},
+      taxes: {qty: (amountWithoutIVA * 0.2).toFixed(2), label: 'Taxes: '},
+      total: {
+        qty: (amountWithoutIVA * 1.2 + transport).toFixed(2),
+        label: 'Total a pagar: ',
+      },
     });
   }, []);
 
@@ -37,30 +44,49 @@ const SummaryScreen = ({cart: {items}, navigation}) => {
     );
   };
 
+  const renderSummaryContent = () => {
+    const stateValues = Object.values(state);
+    return stateValues.map(({label, qty}, index) => {
+      return (
+        <View
+          style={[
+            styles.rowContainer,
+            {justifyContent: 'space-between'},
+            index === stateValues.length - 1 && styles.totalPaymentSeparator,
+          ]}>
+          <Text>{label}</Text>
+          <Text>{qty}€</Text>
+        </View>
+      );
+    });
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.summaryCard}>
-        <Text>Total without IVA: {state.amountWithoutIVA}€</Text>
-        <Text>
-          Total envío:{' '}
-          {state.transport ? `${state.transport}€` : 'Envío gratuito'}
-        </Text>
-        <Text>Taxes: {state.taxes}€</Text>
-        <Text>Total a pagar: {state.total}€</Text>
-        <Button text={'Confirm'} onPress={onConfirm} />
-      </View>
-      <View style={{flexDirection: 'row'}}>
-        <Text>¿No estás registrado?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-          <Text> Regístrate</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{flexDirection: 'row'}}>
-        <Text>¿Ya tienes una cuenta?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text> Inicia Sesión</Text>
-        </TouchableOpacity>
-      </View>
+      <ShadowContainer style={styles.summaryCard}>
+        {renderSummaryContent()}
+        <View style={styles.confirmContainer}>
+          <Button
+            style={styles.disabledButton}
+            text={'Confirm'}
+            onPress={onConfirm}
+            disabled
+          />
+          <View style={styles.rowContainer}>
+            <Text>Debes </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.link}>iniciar sesión</Text>
+            </TouchableOpacity>
+            <Text> para realizar el pedido</Text>
+          </View>
+          <View style={styles.rowContainer}>
+            <Text>¿No estás registrado? </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+              <Text style={styles.link}>Regístrate</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ShadowContainer>
     </View>
   );
 };

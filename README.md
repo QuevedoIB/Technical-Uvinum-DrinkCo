@@ -29,6 +29,7 @@ En el css los tags tienen un valor que se va acumulando (especifidad) , el eleme
 1000 aprox inline styling (se aplica directamente al elemento)
 
 ul 1 clase shopping-list 10 li 1 clase favorite 10 span 1 = 23
+
 ul 1 id awesomeProduct 100 li 1 = 102
 
 `I am awesome` será de color rojo.

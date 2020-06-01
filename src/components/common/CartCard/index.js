@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
 import PropTypes from 'prop-types';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -39,57 +40,46 @@ const CartCard = ({
     );
 
   return (
-    <ShadowContainer style={{margin: 16, overflow: 'visible'}}>
-      <View style={styles.container}>
-        <ShadowContainer
-          style={{
-            height: 60,
-            width: 60,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Image
-            testID={'cardImage'}
-            source={{uri: image}}
-            style={styles.image}
-          />
-        </ShadowContainer>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.name}>{name}</Text>
+    <View>
+      <ShadowContainer style={styles.shadowContainer}>
+        <View style={styles.container}>
+          <ShadowContainer style={styles.shadowImage}>
+            <Image
+              testID={'cardImage'}
+              source={{uri: image}}
+              style={styles.image}
+            />
+          </ShadowContainer>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.name}>{name}</Text>
+          </View>
+          <View style={styles.detailsContainer}>
+            <View style={styles.pricingContainer}>
+              <Text style={styles.price}>{price}€</Text>
+              <Text style={styles.amount}>{qty}</Text>
+              <View>
+                <TouchableOpacity
+                  testID={'increaseTouchable'}
+                  onPress={onIncreaseAmount}>
+                  <EntypoIcon name="chevron-small-up" size={20} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  testID={'decreaseTouchable'}
+                  onPress={onDecreaseAmount}>
+                  <EntypoIcon name="chevron-small-down" size={20} />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <Text testID={'subtotal'} style={styles.total}>
+              Subtotal: {price * qty}€
+            </Text>
+          </View>
         </View>
-        <Text style={styles.price}>{price}€</Text>
-        <Text style={styles.amount}>{qty}</Text>
-        <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity
-            testID={'increaseTouchable'}
-            onPress={onIncreaseAmount}>
-            <Text>+</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            testID={'decreaseTouchable'}
-            onPress={onDecreaseAmount}>
-            <Text>-</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <Text testID={'subtotal'} style={styles.amount}>
-        Subtotal: {price * qty}€
-      </Text>
-      <TouchableOpacity
-        style={{
-          height: 20,
-          width: 20,
-          backgroundColor: 'red',
-          borderRadius: 50,
-          alignItems: 'center',
-          position: 'absolute',
-          right: -10,
-          top: -10,
-        }}
-        onPress={onRemoveItem}>
-        <Text style={{color: 'white'}}>X</Text>
+      </ShadowContainer>
+      <TouchableOpacity style={styles.deleteContainer} onPress={onRemoveItem}>
+        <Text style={styles.deleteIcon}>X</Text>
       </TouchableOpacity>
-    </ShadowContainer>
+    </View>
   );
 };
 

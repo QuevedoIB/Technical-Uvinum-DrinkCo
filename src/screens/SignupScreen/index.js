@@ -3,6 +3,7 @@ import {ScrollView, View} from 'react-native';
 import PropTypes from 'prop-types';
 
 import SignupForm from '../../components/forms/SignupForm';
+import styles from './styles';
 
 const SignupScreen = ({navigation}) => {
   const onSubmit = (data, bag) => {
@@ -14,12 +15,8 @@ const SignupScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <ScrollView
-        contentContainerStyle={{
-          marginTop: 16,
-          alignItems: 'center',
-        }}>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.list}>
         <SignupForm onSubmit={onSubmit} />
       </ScrollView>
     </View>

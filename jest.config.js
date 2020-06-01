@@ -9,6 +9,7 @@ module.exports = {
       '|react-native-screens' +
       '|react-native-reanimated' +
       '|react-native-extended-stylesheet' +
+      '|react-native-vector-icons' +
       ')/)',
   ],
 };

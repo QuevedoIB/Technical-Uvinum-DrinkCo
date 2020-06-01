@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import PropTypes from 'prop-types';
 
 import LoginForm from '../../components/forms/LoginForm';
+import styles from './styles';
 
 const LoginScreen = ({navigation}) => {
   const onSubmit = (data, bag) => {
@@ -13,7 +14,7 @@ const LoginScreen = ({navigation}) => {
     bag.resetForm({});
   };
   return (
-    <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+    <View style={styles.container}>
       <LoginForm onSubmit={onSubmit} />
     </View>
   );

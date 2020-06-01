@@ -5,9 +5,31 @@ const styles = EStyleSheet.create({
   summaryCard: {
     height: '$screenHeight * 0.6',
     width: '$screenWidth * 0.8',
-    backgroundColor: 'red',
     borderRadius: 12,
     padding: 16,
+  },
+  link: {
+    textDecorationLine: 'underline',
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    marginBottom: 8,
+  },
+  disabledButton: {
+    backgroundColor: 'gray',
+    marginBottom: 8,
+  },
+  confirmContainer: {
+    position: 'absolute',
+    bottom: 16,
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  totalPaymentSeparator: {
+    borderTopWidth: 1,
+    paddingTop: 6,
   },
 });
 
