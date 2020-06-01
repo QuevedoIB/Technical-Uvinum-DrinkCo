@@ -49,6 +49,7 @@ const SummaryScreen = ({cart: {items}, navigation}) => {
     return stateValues.map(({label, qty}, index) => {
       return (
         <View
+          key={`${index}${label}`}
           style={[
             styles.rowContainer,
             {justifyContent: 'space-between'},
