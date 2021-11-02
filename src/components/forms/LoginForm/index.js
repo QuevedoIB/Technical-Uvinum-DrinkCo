@@ -1,16 +1,21 @@
 import React from 'react';
+import { KeyboardAvoidingView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import Input from '../../common/Input';
 import Button from '../../common/Button';
 
-const LoginForm = ({onSubmit}) => {
+import styles from './styles';
+
+const LoginForm = ({ onSubmit }) => {
+  const [t] = useTranslation();
   return (
     <Formik
-      initialValues={{email: '', password: ''}}
+      initialValues={{ email: '', password: '' }}
       onSubmit={onSubmit}
       validationSchema={Yup.object().shape({
         email: Yup.string()
@@ -31,10 +36,10 @@ const LoginForm = ({onSubmit}) => {
         isSubmitting,
         resetForm,
       }) => (
-        <>
+        <KeyboardAvoidingView>
           <Input
             value={values.email}
-            placeholder={'Email'}
+            placeholder={t('forms.email')}
             name="email"
             onChange={setFieldValue}
             onTouch={setFieldTouched}
@@ -42,14 +47,14 @@ const LoginForm = ({onSubmit}) => {
           />
           <Input
             value={values.password}
-            placeholder={'Password'}
+            placeholder={t('forms.password')}
             name="password"
             onChange={setFieldValue}
             onTouch={setFieldTouched}
             error={touched.password && errors.password}
           />
-          <Button text={'Login'} onPress={handleSubmit} />
-        </>
+          <Button text={t('summary.login')} onPress={handleSubmit} />
+        </KeyboardAvoidingView>
       )}
     </Formik>
   );

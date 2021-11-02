@@ -1,0 +1,32 @@
+{
+  "common": {
+    "confirm": "Confirmar",
+    "total": "Total"
+  },
+  "cart": {
+    "errors": {
+      "fetching": "Ha ocurrido un error recuperando los datos del carrito"
+    },
+    "success": "Se ha realizado la compra con éxito"
+  },
+  "summary": {
+    "labels": {
+      "totalWithoutTaxes": "$t(common.total) sin IVA",
+      "totalTransport": "$t(common.total) envío",
+      "taxes": "Tasas",
+      "total": "$t(common.total) a pagar"
+    },
+    "loginReminderHead": "Debes",
+    "loginReminderEnding": "Para realizar el pedido",
+    "login": "Iniciar sesión",
+    "signupReminder": "¿No estás registrado?",
+    "signup": "Regístrate"
+  },
+  "forms": {
+    "name": "Nombre",
+    "surnames": "Apellidos",
+    "email": "Correo",
+    "password": "Contraseña",
+    "confirm": "$t(common.confirm) $t(forms.password)"
+  }
+}

@@ -1,39 +1,48 @@
-import React, {useEffect} from 'react';
-import {FlatList} from 'react-native';
+import React from 'react';
+import { FlatList, Alert } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { useQuery } from 'react-query';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as actions from '../../redux/actions/cart';
-
-import checkoutService from '../../components/../services/checkoutService';
+import CheckoutService from '../../components/../services/CheckoutService';
 import CartCard from '../../components/common/CartCard';
 import Button from '../../components/common/Button';
+import Spinner from '../../components/common/Spinner';
 
-const CartScreen = ({cart: {items}, navigation, replaceCart}) => {
-  useEffect(() => {
-    loadItemsToRedux();
-  }, []);
+import { setCart } from '../../redux/reducers/cart';
 
-  const loadItemsToRedux = async () => {
-    const {
-      data: {data},
-    } = await checkoutService.getCheckout();
+import styles from './styles';
 
-    replaceCart(data);
-  };
+const CartScreen = ({ navigation }) => {
+  const [t] = useTranslation();
+  const dispatch = useDispatch();
+  const items = useSelector(store => store.cart.items);
+
+  const { isLoading, error } = useQuery('fetchCart', async () => {
+    const res = await CheckoutService.getCheckout();
+    dispatch(setCart(res));
+  });
+
+  if (error) {
+    Alert.alert(t('cart.errors.fetching'));
+  }
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={items}
-        renderItem={({item}) => <CartCard item={item} />}
-        keyExtractor={({item_id}) => `${item_id}`}
+        renderItem={({ item }) => <CartCard item={item} />}
+        keyExtractor={({ item_id }) => `${item_id}`}
       />
       <Button
-        style={{position: 'absolute', bottom: 24, alignSelf: 'center'}}
-        text={'Confirm'}
+        style={styles.floatingButton}
+        text={t('common.confirm')}
         onPress={() => navigation.navigate('Summary')}
       />
     </>
@@ -51,19 +60,7 @@ CartScreen.propTypes = {
       }),
     ),
   }),
-  replaceCart: PropTypes.func.isRequired,
   navigation: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({cart}) => ({
-  cart,
-});
-
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(actions, dispatch),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CartScreen);
+export default CartScreen;

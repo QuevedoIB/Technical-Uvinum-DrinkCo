@@ -1,19 +1,21 @@
-import React, {useEffect, useReducer} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import {connect} from 'react-redux';
-import styles from '../SummaryScreen/styles';
-
-import checkoutService from '../../services/checkoutService';
+import SummaryBody from '../../components/SummaryBody';
 import Button from '../../components/common/Button';
 import ShadowContainer from '../../components/common/ShadowContainer';
 
-const SummaryScreen = ({cart: {items}, navigation}) => {
-  const [state, setState] = useReducer(
-    (oldState, newState) => ({...oldState, ...newState}),
-    {},
-  );
+import CheckoutService from '../../services/CheckoutService';
+
+import styles from '../SummaryScreen/styles';
+
+const SummaryScreen = ({ navigation }) => {
+  const [t] = useTranslation();
+  const items = useSelector(store => store.cart.items);
+  const [summary, setSummary] = useState({});
 
   useEffect(() => {
     const amountWithoutIVA = items.reduce(
@@ -23,67 +25,55 @@ const SummaryScreen = ({cart: {items}, navigation}) => {
 
     const transport = amountWithoutIVA >= 30 ? 0 : 5.95;
 
-    setState({
+    setSummary({
       amountWithoutIVA: {
         qty: amountWithoutIVA.toFixed(2),
-        label: 'Total without IVA: ',
+        label: t('summary.labels.totalWithoutTaxes'),
       },
-      transport: {qty: transport, label: 'Total envío: '},
-      taxes: {qty: (amountWithoutIVA * 0.2).toFixed(2), label: 'Taxes: '},
+      transport: {
+        qty: transport,
+        label: t('summary.labels.totalTransport'),
+      },
+      taxes: {
+        qty: (amountWithoutIVA * 0.2).toFixed(2),
+        label: t('summary.labels.taxes'),
+      },
       total: {
         qty: (amountWithoutIVA * 1.2 + transport).toFixed(2),
-        label: 'Total a pagar: ',
+        label: t('summary.labels.total'),
       },
     });
-  }, []);
+  }, [items, t]);
 
   const onConfirm = async () => {
     //api call to send checkout and proceed with payments flow
-    const response = await checkoutService.sendCheckout(
-      JSON.stringify({items}),
-    );
-  };
-
-  const renderSummaryContent = () => {
-    const stateValues = Object.values(state);
-    return stateValues.map(({label, qty}, index) => {
-      return (
-        <View
-          key={`${index}${label}`}
-          style={[
-            styles.rowContainer,
-            {justifyContent: 'space-between'},
-            index === stateValues.length - 1 && styles.totalPaymentSeparator,
-          ]}>
-          <Text>{label}</Text>
-          <Text>{qty}€</Text>
-        </View>
-      );
-    });
+    await CheckoutService.sendCheckout(JSON.stringify({ items }));
   };
 
   return (
     <View style={styles.container}>
       <ShadowContainer style={styles.summaryCard}>
-        {renderSummaryContent()}
+        <SummaryBody summary={summary} />
         <View style={styles.confirmContainer}>
           <Button
             style={styles.disabledButton}
-            text={'Confirm'}
+            text={t('common.confirm')}
             onPress={onConfirm}
             disabled
           />
           <View style={styles.rowContainer}>
-            <Text>Debes </Text>
+            <Text>{t('summary.loginReminderHead')} </Text>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.link}>iniciar sesión</Text>
+              <Text style={styles.link}>
+                {t('summary.login').toLowerCase()}{' '}
+              </Text>
             </TouchableOpacity>
-            <Text> para realizar el pedido</Text>
+            <Text>{t('summary.loginReminderEnding')}</Text>
           </View>
           <View style={styles.rowContainer}>
-            <Text>¿No estás registrado? </Text>
+            <Text>{t('summary.signupReminder')} </Text>
             <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-              <Text style={styles.link}>Regístrate</Text>
+              <Text style={styles.link}>{t('summary.signup')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -106,8 +96,4 @@ SummaryScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({cart}) => ({
-  cart,
-});
-
-export default connect(mapStateToProps)(SummaryScreen);
+export default SummaryScreen;

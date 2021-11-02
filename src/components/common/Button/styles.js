@@ -5,7 +5,7 @@ const styles = EStyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 50,
-    backgroundColor: 'blue',
+    backgroundColor: '$primaryDark',
     maxWidth: 140,
     alignItems: 'center',
   },

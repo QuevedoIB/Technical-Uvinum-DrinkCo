@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput, Text} from 'react-native';
+import { View, TextInput, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -16,7 +16,9 @@ const Input = ({
   ...rest
 }) => {
   const errorCheck = () => {
-    if (error) return <Text style={styles.error}>{error}</Text>;
+    if (error) {
+      return <Text style={styles.error}>{error}</Text>;
+    }
   };
 
   return (
@@ -29,7 +31,7 @@ const Input = ({
           autoCapitalize="none"
           onChangeText={text => onChange(name, text)}
           onBlur={() => onTouch(name)}
-          placeholderTextColor={EStyleSheet.value('$primaryLight')}
+          placeholderTextColor={EStyleSheet.value('$primaryDark')}
           {...rest}
         />
       </View>

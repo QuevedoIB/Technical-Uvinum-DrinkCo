@@ -1,26 +1,24 @@
 import React from 'react';
-import {View, Text, Image, TouchableOpacity, Alert} from 'react-native';
+import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as actions from '../../../redux/actions/cart';
-
-import styles from './styles';
 import ShadowContainer from '../ShadowContainer';
 
-const CartCard = ({
-  item: {item_id, name, price, qty},
-  image,
-  updateCartItem,
-  deleteCartItem,
-}) => {
-  const onIncreaseAmount = () => updateCartItem({item_id, qty: qty + 1});
+import { updateCartItem, deleteCartItem } from '../../../redux/reducers/cart';
+import { parseCurrency } from '../../../helpers/parseCurrency';
+
+import styles from './styles';
+
+const CartCard = ({ item: { item_id, name, price, qty, image } }) => {
+  const dispatch = useDispatch();
+  const onIncreaseAmount = () =>
+    dispatch(updateCartItem({ item_id, qty: qty + 1 }));
 
   const onDecreaseAmount = () => {
     if (qty > 1) {
-      updateCartItem({item_id, qty: qty - 1});
+      dispatch(updateCartItem({ item_id, qty: qty - 1 }));
     }
   };
 
@@ -34,9 +32,9 @@ const CartCard = ({
           onPress: () => null,
           style: 'cancel',
         },
-        {text: 'Yes', onPress: () => deleteCartItem({item_id})},
+        { text: 'Yes', onPress: () => dispatch(deleteCartItem({ item_id })) },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
 
   return (
@@ -46,7 +44,7 @@ const CartCard = ({
           <ShadowContainer style={styles.shadowImage}>
             <Image
               testID={'cardImage'}
-              source={{uri: image}}
+              source={{ uri: image }}
               style={styles.image}
             />
           </ShadowContainer>
@@ -55,7 +53,9 @@ const CartCard = ({
           </View>
           <View style={styles.detailsContainer}>
             <View style={styles.pricingContainer}>
-              <Text style={styles.price}>{price}€</Text>
+              <Text style={styles.price}>
+                {parseCurrency({ amount: price })}
+              </Text>
               <Text style={styles.amount}>{qty}</Text>
               <View>
                 <TouchableOpacity
@@ -71,7 +71,7 @@ const CartCard = ({
               </View>
             </View>
             <Text testID={'subtotal'} style={styles.total}>
-              Subtotal: {price * qty}€
+              Subtotal: {parseCurrency({ amount: price * qty })}
             </Text>
           </View>
         </View>
@@ -89,22 +89,11 @@ CartCard.propTypes = {
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     qty: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
   }),
   image: PropTypes.string,
   updateCartItem: PropTypes.func,
   deleteCartItem: PropTypes.func,
 };
 
-CartCard.defaultProps = {
-  image:
-    'https://cdn.discordapp.com/attachments/621073689055592449/716749482561241139/vino.png',
-};
-
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators(actions, dispatch),
-});
-
-export default connect(
-  null,
-  mapDispatchToProps,
-)(CartCard);
+export default CartCard;

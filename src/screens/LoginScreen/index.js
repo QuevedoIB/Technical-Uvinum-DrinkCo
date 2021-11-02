@@ -1,17 +1,23 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 
 import LoginForm from '../../components/forms/LoginForm';
+import AuthService from '../../services/AuthService';
+
 import styles from './styles';
 
-const LoginScreen = ({navigation}) => {
-  const onSubmit = (data, bag) => {
-    const {email, password} = data;
+const LoginScreen = ({ navigation }) => {
+  const onSubmit = async (data, bag) => {
+    try {
+      //Auth login api call with data
+      const user = await AuthService.logIn(data);
+      // set token in axios / save user in redux
 
-    //Auth login api call with data, save data/token to redux and navigate
+      bag.resetForm({});
 
-    bag.resetForm({});
+      //navigate
+    } catch (error) {}
   };
   return (
     <View style={styles.container}>
