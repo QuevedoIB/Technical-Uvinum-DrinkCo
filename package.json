@@ -15,7 +15,7 @@
     "@react-navigation/native": "^5.5.0",
     "@react-navigation/stack": "^5.4.1",
     "@reduxjs/toolkit": "^1.6.2",
-    "axios": "^0.19.2",
+    "axios": "^0.24.0",
     "formik": "^2.1.4",
     "i18next": "^21.4.0",
     "kutaisan-react-native-keyboard-aware-scroll-view": "^0.9.4",
