@@ -24,7 +24,6 @@ export const cartSlice = createSlice({
       );
     },
     setCart: (state, action) => {
-      console.log(action);
       state.items = action.payload;
     },
   },

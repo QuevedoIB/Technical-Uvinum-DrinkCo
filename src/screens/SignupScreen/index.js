@@ -1,25 +1,39 @@
-import React from 'react';
-import {ScrollView, View} from 'react-native';
+import React, { useCallback } from 'react';
+import { KeyboardAwareScrollView } from 'kutaisan-react-native-keyboard-aware-scroll-view';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import SignupForm from '../../components/forms/SignupForm';
+import SignupForm from 'src/components/forms/SignupForm';
+
+import AuthService from 'src/services/AuthService';
+import { setUser } from 'src/redux/reducers/user';
+
 import styles from './styles';
 
-const SignupScreen = ({navigation}) => {
-  const onSubmit = (data, bag) => {
-    const {name, surnames, email, password, confirm} = data;
+const SignupScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const onSubmit = useCallback(
+    async (data, bag) => {
+      try {
+        //Auth signup api call with data save data/token to redux and navigate
+        const { email } = await AuthService.signUp(data);
 
-    //Auth signup api call with data save data/token to redux and navigate
+        dispatch(setUser(email));
 
-    bag.resetForm({});
-  };
+        bag.resetForm({});
+
+        navigation.goBack();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [dispatch, navigation],
+  );
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.list}>
-        <SignupForm onSubmit={onSubmit} />
-      </ScrollView>
-    </View>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+      <SignupForm onSubmit={onSubmit} />
+    </KeyboardAwareScrollView>
   );
 };
 

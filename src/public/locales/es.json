@@ -1,13 +1,20 @@
 {
   "common": {
     "confirm": "Confirmar",
-    "total": "Total"
+    "total": "Total",
+    "yes": "Sí",
+    "no": "No"
   },
   "cart": {
+    "labels": {
+      "quantity": "Cantidad:",
+      "subtotal": "Subtotal:"
+    },
     "errors": {
       "fetching": "Ha ocurrido un error recuperando los datos del carrito"
     },
-    "success": "Se ha realizado la compra con éxito"
+    "success": "Se ha realizado la compra con éxito",
+    "deleteConfirmation": "¿Estás seguro/a de que quieres eliminar {{item}} del carrito?"
   },
   "summary": {
     "labels": {
@@ -27,6 +34,12 @@
     "surnames": "Apellidos",
     "email": "Correo",
     "password": "Contraseña",
-    "confirm": "$t(common.confirm) $t(forms.password)"
+    "confirm": "$t(common.confirm) $t(forms.password)",
+    "errors": {
+      "mandatory": "*Es obligatorio rellenar este campo",
+      "email": "*El formato de correo no es válido",
+      "length": "*El campo debe contener al menos {{amount}} carácteres",
+      "match": "*Las contraseñas no coinciden"
+    }
   }
 }

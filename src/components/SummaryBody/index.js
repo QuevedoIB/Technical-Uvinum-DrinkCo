@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-import { parseCurrency } from '../../helpers/parseCurrency';
+import { parseCurrency } from 'src/helpers/parseCurrency';
 
 import styles from './styles';
 

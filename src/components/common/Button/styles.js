@@ -8,12 +8,14 @@ const styles = EStyleSheet.create({
     backgroundColor: '$primaryDark',
     maxWidth: 140,
     alignItems: 'center',
+    alignSelf: 'center',
   },
   text: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
   },
+  disabled: { backgroundColor: 'lightgray' },
 });
 
 export default styles;

@@ -4,48 +4,48 @@
     "name": "Pago de los Capellanes Joven Roble 2019",
     "price": 11.95,
     "image": "https://media-verticommnetwork1.netdna-ssl.com/wines/pago-de-los-capellanes-joven-roble-1642826.jpg",
-    "qty": 10
+    "qty": 3
   },
   {
     "item_id": 1234,
     "name": "Pruno 2019",
     "price": 9.69,
     "image": "https://media-verticommnetwork1.netdna-ssl.com/wines/pruno-1724979_p.jpg",
-    "qty": 10
+    "qty": 5
   },
   {
     "item_id": 12345,
     "name": "Ramón Bilbao Crianza 2017",
     "price": 7.8,
     "image": "https://media-verticommnetwork1.netdna-ssl.com/wines/ramon-bilbao-crianza-1643327.jpg",
-    "qty": 10
+    "qty": 1
   },
   {
     "item_id": 54321,
     "name": "Pruno 2018",
     "price": 9.98,
     "image": "https://media-verticommnetwork1.netdna-ssl.com/wines/pruno-1552158_e.jpg",
-    "qty": 10
+    "qty": 2
   },
   {
     "item_id": 5432,
     "name": "Castillo Ygay Gran Reserva Especial 2010",
     "price": 215,
     "image": "https://media-verticommnetwork1.netdna-ssl.com/wines/castillo-ygay-gran-reserva-especial-1602159_p.jpg",
-    "qty": 10
+    "qty": 1
   },
   {
     "item_id": 543,
     "name": "Ramón Bilbao Reserva 2015",
     "price": 10.9,
     "image": "https://media-verticommnetwork1.netdna-ssl.com/wines/ramon-bilbao-reserva-1417664_p.jpg",
-    "qty": 10
+    "qty": 3
   },
   {
     "item_id": 987,
     "name": "Flor de Vetus 2017",
     "price": 7.45,
     "image": "https://media-verticommnetwork1.netdna-ssl.com/wines/flor-de-vetus-1550652_p.jpg",
-    "qty": 10
+    "qty": 5
   }
 ]

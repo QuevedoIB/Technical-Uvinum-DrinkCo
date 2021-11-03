@@ -4,17 +4,18 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import SummaryBody from '../../components/SummaryBody';
-import Button from '../../components/common/Button';
-import ShadowContainer from '../../components/common/ShadowContainer';
+import SummaryBody from 'src/components/SummaryBody';
+import Button from 'src/components/common/Button';
+import ShadowContainer from 'src/components/common/ShadowContainer';
 
-import CheckoutService from '../../services/CheckoutService';
+import CheckoutService from 'src/services/CheckoutService';
 
-import styles from '../SummaryScreen/styles';
+import styles from './styles';
 
 const SummaryScreen = ({ navigation }) => {
   const [t] = useTranslation();
   const items = useSelector(store => store.cart.items);
+  const user = useSelector(store => store.user.user);
   const [summary, setSummary] = useState({});
 
   useEffect(() => {
@@ -46,8 +47,13 @@ const SummaryScreen = ({ navigation }) => {
   }, [items, t]);
 
   const onConfirm = async () => {
-    //api call to send checkout and proceed with payments flow
-    await CheckoutService.sendCheckout(JSON.stringify({ items }));
+    try {
+      //api call to send checkout and proceed with payments flow
+      await CheckoutService.saveCheckout(JSON.stringify({ items }));
+      //reset cart items and navigate
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -56,26 +62,30 @@ const SummaryScreen = ({ navigation }) => {
         <SummaryBody summary={summary} />
         <View style={styles.confirmContainer}>
           <Button
-            style={styles.disabledButton}
+            style={styles.checkoutButton}
             text={t('common.confirm')}
             onPress={onConfirm}
-            disabled
+            disabled={!user}
           />
-          <View style={styles.rowContainer}>
-            <Text>{t('summary.loginReminderHead')} </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.link}>
-                {t('summary.login').toLowerCase()}{' '}
-              </Text>
-            </TouchableOpacity>
-            <Text>{t('summary.loginReminderEnding')}</Text>
-          </View>
-          <View style={styles.rowContainer}>
-            <Text>{t('summary.signupReminder')} </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-              <Text style={styles.link}>{t('summary.signup')}</Text>
-            </TouchableOpacity>
-          </View>
+          {!user && (
+            <>
+              <View style={styles.rowContainer}>
+                <Text>{t('summary.loginReminderHead')} </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                  <Text style={styles.link}>
+                    {t('summary.login').toLowerCase()}{' '}
+                  </Text>
+                </TouchableOpacity>
+                <Text>{t('summary.loginReminderEnding')}</Text>
+              </View>
+              <View style={styles.rowContainer}>
+                <Text>{t('summary.signupReminder')} </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+                  <Text style={styles.link}>{t('summary.signup')}</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </View>
       </ShadowContainer>
     </View>

@@ -17,9 +17,8 @@ const styles = EStyleSheet.create({
     flexWrap: 'wrap',
     marginBottom: 8,
   },
-  disabledButton: {
-    backgroundColor: 'gray',
-    marginBottom: 8,
+  checkoutButton: {
+    marginBottom: 16,
   },
   confirmContainer: {
     position: 'absolute',

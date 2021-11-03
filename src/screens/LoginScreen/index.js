@@ -1,28 +1,40 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useCallback } from 'react';
+import { KeyboardAwareScrollView } from 'kutaisan-react-native-keyboard-aware-scroll-view';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import LoginForm from '../../components/forms/LoginForm';
-import AuthService from '../../services/AuthService';
+import LoginForm from 'src/components/forms/LoginForm';
+
+import AuthService from 'src/services/AuthService';
+import { setUser } from 'src/redux/reducers/user';
 
 import styles from './styles';
 
 const LoginScreen = ({ navigation }) => {
-  const onSubmit = async (data, bag) => {
-    try {
-      //Auth login api call with data
-      const user = await AuthService.logIn(data);
-      // set token in axios / save user in redux
+  const dispatch = useDispatch();
+  const onSubmit = useCallback(
+    async (data, bag) => {
+      try {
+        //Auth login api call with data
+        const { email } = await AuthService.logIn(data);
+        // set token in axios / save user in redux
+        dispatch(setUser(email));
 
-      bag.resetForm({});
+        bag.resetForm({});
 
-      //navigate
-    } catch (error) {}
-  };
+        //navigate
+        navigation.goBack();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [dispatch, navigation],
+  );
+
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <LoginForm onSubmit={onSubmit} />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

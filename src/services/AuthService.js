@@ -1,16 +1,14 @@
 import axios from 'axios';
-import { CHECKOUT_ENDPOINT_URL } from 'react-native-dotenv';
 
 class AuthService {
   constructor() {
     this.auth = axios.create({
-      baseURL: CHECKOUT_ENDPOINT_URL,
+      baseURL: '', // auth service endpoint
     });
   }
 
   signUp(object) {
-    //Save checkout api call
-    Promise.resolve(object);
+    return Promise.resolve(object);
   }
 
   logIn(object) {

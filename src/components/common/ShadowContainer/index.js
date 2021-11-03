@@ -1,10 +1,10 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 
-import styles from '../ShadowContainer/styles';
+import styles from './styles';
 
-const ShadowContainer = ({children, style}) => {
+const ShadowContainer = ({ children, style }) => {
   return (
     <View testID={'shadowContainer'} style={[styles.shadow, style]}>
       {children}

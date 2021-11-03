@@ -5,12 +5,12 @@ import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
-import CheckoutService from '../../components/../services/CheckoutService';
-import CartCard from '../../components/common/CartCard';
-import Button from '../../components/common/Button';
-import Spinner from '../../components/common/Spinner';
+import CheckoutService from 'src/components/../services/CheckoutService';
+import CartCard from 'src/components/common/CartCard';
+import Button from 'src/components/common/Button';
+import Spinner from 'src/components/common/Spinner';
 
-import { setCart } from '../../redux/reducers/cart';
+import { setCart } from 'src/redux/reducers/cart';
 
 import styles from './styles';
 
@@ -35,6 +35,7 @@ const CartScreen = ({ navigation }) => {
   return (
     <>
       <FlatList
+        contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
         data={items}
         renderItem={({ item }) => <CartCard item={item} />}
